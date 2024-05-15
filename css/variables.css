@@ -1,0 +1,10 @@
+:root{
+    --clr-green-primary: #1db954;
+    --clr-green-secondary: #1ed760;
+    --clr-black: #121212;
+    --clr-white: #fff;
+}
+@font-face {
+    font-family: 'Circular Std Book';
+    src: url(../storage/font/CircularStd-Book.otf);
+}
