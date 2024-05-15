@@ -16,5 +16,118 @@ main {
     justify-content: center;
     align-items: center;
     background-color: var(--clr-black);
+    padding: 15px;
+}
+.left{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+}
+.discover{
+    width: 100%;
+    height: 100px;
+}
+.discover h1{
+    font-size:5vh;
 }
 
+/* icono de busqueda y su input */
+
+.busqueda {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.input {
+    font-family: inherit;
+    font-size: inherit;
+    background-color: #181717;
+    border: none;
+    color: #646464;
+    padding: 0.7rem 1rem;
+    border-radius: 30px;
+    width: 90%;
+    transition: all ease-in-out .5s;
+    margin-right: -2rem;
+}
+
+.input:hover, .input:focus {
+    box-shadow: 0 0 1em #2c2c2c13;
+}
+
+.input:focus {
+    outline: none;
+    background-color: #111010;
+}
+
+.input::-webkit-input-placeholder {
+    font-weight: 100;
+    color: #ccc;
+}
+
+.input:focus + .boton_input {
+    background-color: #21212100;
+}
+
+.boton_input {
+    border: none;
+    background-color: #13131300;
+    margin-top: .1em;
+}
+
+.boton_input:hover {
+    cursor: pointer;
+}
+
+.icono_busqueda {
+    height: 1.3em;
+    width: 1.3em;
+    fill: #b4b4b4;
+}
+
+/* top_chart */
+
+.top_chart {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-between;
+    width: 90%;
+}
+.top_chart div{
+    display: flex;
+}
+.top_chart div i{
+    font-size: 20px;
+}
+
+/* lista de albums */
+
+.lista_albumes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    width: 90%;
+    height: 50%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.album{
+    width: 100%;
+    object-fit: contain;
+    box-sizing: border-box;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center ;
+}
+.album img{
+    width: 90%;
+    border-radius: 5px;
+}
