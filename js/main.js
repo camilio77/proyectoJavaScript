@@ -22,11 +22,11 @@ class myFrame extends HTMLElement {
         this.id = id;
         this.type = type;
         this.shadowRoot.innerHTML = `
-            <iframe class="spotify-iframe" width="654" height="800" src="https://open.spotify.com/embed/${this.type}/${this.id}" frameborder="0" allowtransparency="true" allow="encrypted-media" autoplay="true"></iframe>
+            <iframe class="spotify-iframe" width="654" height="800" src="https://open.spotify.com/embed/${this.type}/${this.id}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         `;
         if (type == "track"){
             this.shadowRoot.innerHTML = `
-            <iframe class="spotify-iframe" width="654" height="100%" src="https://open.spotify.com/embed/${this.type}/${this.id}" frameborder="0" allowtransparency="true" allow="encrypted-media" autoplay="true"></iframe>
+            <iframe class="spotify-iframe" width="654" height="100%" src="https://open.spotify.com/embed/${this.type}/${this.id}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         `;
         }
     }
@@ -173,3 +173,45 @@ class mayLike extends HTMLElement {
     }
 }
 customElements.define('track-list', mayLike);
+
+class TrackList extends HTMLElement {
+    constructor() {
+        super();
+    }
+    async connectedCallback() {
+        this.myFrameLoad();
+    }
+    async myFrameLoad(){
+        let myframe = document.querySelector("my-frame");
+        let uri = myframe.getAttribute("uri");
+        let id = uri.split(":")[2]
+        await this.albumTracks(id);
+    }
+    async albumTracks(id){
+        const url = `https://spotify23.p.rapidapi.com/albums/?ids=${id}`;
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '050ce98713mshc39f94907960c39p1bfff7jsndda4a1fa91ce',
+                'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
+            }
+        };
+        
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    static get observedAttributes() {
+        return ['uri'];
+    }
+    attributeChangedCallback(name, oldVal, newVal){
+        if (name === "uri") {
+            this.myFrameLoad();
+        }
+    }
+}
+customElements.define('album-tracks', TrackList);
