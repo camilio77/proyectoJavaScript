@@ -110,14 +110,15 @@ main {
 
 /* lista de albums */
 
-.lista_albumes {
+albums-list{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
     width: 90%;
-    height: 35%;
+    height: 45vh;
     box-sizing: border-box;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 .album{
     width: 100%;
@@ -127,6 +128,12 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center ;
+    transition: .2s ease-in-out;
+}
+
+.album:hover{
+    cursor: pointer;
+    scale: 1.04;
 }
 .album img{
     width: 90%;
@@ -135,29 +142,29 @@ main {
 
 /* scroll */
 
-.lista_albumes::-webkit-scrollbar {
+albums-list::-webkit-scrollbar {
     -webkit-appearance: none;
 }
 
-.lista_albumes::-webkit-scrollbar:vertical {
+albums-list::-webkit-scrollbar:vertical {
     width:10px;
 }
 
-.lista_albumes::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
+albums-list::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
     display: none;
 } 
 
-.lista_albumes::-webkit-scrollbar:horizontal {
+albums-list::-webkit-scrollbar:horizontal {
     height: 10px;
 }
 
-.lista_albumes::-webkit-scrollbar-thumb {
+albums-list::-webkit-scrollbar-thumb {
     background-color: #292929;
     border-radius: 20px;
     border: 2px solid #242424;
 }
 
-.lista_albumes::-webkit-scrollbar-track {
+albums-list::-webkit-scrollbar-track {
     border-radius: 10px;  
 }
 
