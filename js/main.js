@@ -22,16 +22,86 @@ class myFrame extends HTMLElement {
         this.id = id;
         this.type = type;
         this.shadowRoot.innerHTML = `
-            <iframe class="spotify-iframe" width="654" height="800" src="https://open.spotify.com/embed/${this.type}/${this.id}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <iframe class="spotify-iframe" width="100%" height="100%" src="https://open.spotify.com/embed/${this.type}/${this.id}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         `;
         if (type == "track"){
             this.shadowRoot.innerHTML = `
-            <iframe class="spotify-iframe" width="654" height="100%" src="https://open.spotify.com/embed/${this.type}/${this.id}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <iframe class="spotify-iframe" width="100%" height="100%" src="https://open.spotify.com/embed/${this.type}/${this.id}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         `;
         }
     }
 };
 customElements.define("my-frame", myFrame);
+
+const albumTracks = async (uri) =>{
+    let id = uri.split(":")[2]
+    const url = `https://spotify23.p.rapidapi.com/albums/?ids=${id}`;
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '8e046be440msh74b46ecc5a31f61p18d76djsn027ee4aaf416',
+            'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
+        }
+    };
+    
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        const tracks = result.albums[0].tracks.items;
+        let maquetacion = "";
+        for (let i = 0; i < tracks.length; i++) {
+            maquetacion += `
+            <div uri="${tracks[i].uri}" class="track2">
+                <i class='bx bx-align-middle'></i>
+                <div class="img">
+                    <img src="${result.albums[0].images[0].url}">
+                </div>
+                <div class="track_text">
+                    <h3>${tracks[i].name}</h3>
+                    <p>${tracks[i].artists[0].name}</p>
+                </div>
+            </div>
+            `;
+            let section = document.querySelector('.track_container');
+            section.innerHTML = maquetacion;
+            section.querySelectorAll(".track2").forEach(track => {
+                track.addEventListener("click", () => {
+                    let uri = track.getAttribute("uri");
+                    console.log(uri);
+                    let frame = document.querySelector("my-frame");
+                    frame.setAttribute("uri", uri);
+                });
+            });
+        }
+        let section = document.querySelector('.track_container');
+        let frame = document.querySelector("my-frame");
+        frame.setAttribute("uri", uri);
+    } catch (error) {
+        console.error(error);
+    }
+
+    let busqueda2 = document.querySelector(".busqueda2")
+    const boton_input = busqueda2.querySelector('.boton_input');
+    const input = busqueda2.querySelector('.input');
+    boton_input.addEventListener('click', () => {
+        const searchTerm = input.value.trim();
+        if (searchTerm !== '') {
+            console.log("asa");
+            loadAlbums(searchTerm);
+        }
+    });
+
+    input.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            const searchTerm = input.value.trim();
+            if (searchTerm !== '') {
+                console.log("asa");
+                listaAlbums(searchTerm);
+            }
+        }
+    });
+
+}
 
 class albumsBusqueda extends HTMLElement {
     constructor() {
@@ -46,7 +116,7 @@ class albumsBusqueda extends HTMLElement {
             const options = {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Key': '050ce98713mshc39f94907960c39p1bfff7jsndda4a1fa91ce',
+                    'X-RapidAPI-Key': '8e046be440msh74b46ecc5a31f61p18d76djsn027ee4aaf416',
                     'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
                 }
             };
@@ -79,8 +149,7 @@ class albumsBusqueda extends HTMLElement {
                     album.addEventListener("click", () => {
                         let uri = album.getAttribute("uri");
                         console.log(uri);
-                        let frame = document.querySelector("my-frame");
-                        frame.setAttribute("uri", uri);
+                        albumTracks(uri)
                     });
                 });
             } catch (error) {
@@ -124,7 +193,7 @@ class mayLike extends HTMLElement {
             const options = {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Key': '050ce98713mshc39f94907960c39p1bfff7jsndda4a1fa91ce',
+                    'X-RapidAPI-Key': '8e046be440msh74b46ecc5a31f61p18d76djsn027ee4aaf416',
                     'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
                 }
             };
@@ -174,44 +243,3 @@ class mayLike extends HTMLElement {
 }
 customElements.define('track-list', mayLike);
 
-class TrackList extends HTMLElement {
-    constructor() {
-        super();
-    }
-    async connectedCallback() {
-        this.myFrameLoad();
-    }
-    async myFrameLoad(){
-        let myframe = document.querySelector("my-frame");
-        let uri = myframe.getAttribute("uri");
-        let id = uri.split(":")[2]
-        await this.albumTracks(id);
-    }
-    async albumTracks(id){
-        const url = `https://spotify23.p.rapidapi.com/albums/?ids=${id}`;
-        const options = {
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': '050ce98713mshc39f94907960c39p1bfff7jsndda4a1fa91ce',
-                'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
-            }
-        };
-        
-        try {
-            const response = await fetch(url, options);
-            const result = await response.json();
-            console.log(result);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    static get observedAttributes() {
-        return ['uri'];
-    }
-    attributeChangedCallback(name, oldVal, newVal){
-        if (name === "uri") {
-            this.myFrameLoad();
-        }
-    }
-}
-customElements.define('album-tracks', TrackList);
