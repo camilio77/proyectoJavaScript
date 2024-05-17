@@ -466,7 +466,7 @@ my-frame{
     rotate: 0deg;
     animation: rotation 4s linear infinite;
     padding: 4px;
-    bottom: 40px;
+    bottom: 20px;
     right: 10px;
     transition: 1s ease-in-out;
 }
