@@ -146,7 +146,7 @@ class albumsBusqueda extends HTMLElement {
                             maquetacion += `
                             <div uri="${result.albums.items[i].data.uri}" class="album">
                                 <img src="${result.albums.items[i].data.coverArt.sources[0].url}">
-                                <h2>${result.albums.items[i].data.name}</h2>
+                                <h2><marquee behavior="scroll">${result.albums.items[i].data.name}</marquee></h2>
                                 <p>${result.albums.items[i].data.artists.items[0].profile.name}</p>
                             </div>
                             `;

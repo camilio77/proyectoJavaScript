@@ -144,7 +144,11 @@ albums-list{
 }
 
 .album h2{
-    width: 100%;
+    width: 90%;
+    height: 2vh;
+    font-size: 20px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 /* scroll */
@@ -200,6 +204,7 @@ albums-list::-webkit-scrollbar-track {
     display: flex;
     background: #181717;
     border-radius: 10px;
+    align-items: center;
 }
 .track .img{
     width: 18%;
@@ -214,7 +219,7 @@ albums-list::-webkit-scrollbar-track {
 
 .track_text{
     width: 80%;
-    height: 100%;
+    height: 80%;
     padding: 10px;
     box-sizing: border-box;
     display: flex;
