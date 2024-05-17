@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             otherButtons.forEach((button, index) => {
                 button.style.display = 'block';
                 setTimeout(() => {
-                    button.style.transform = `translateY(${(index + 1) * 80}px)`;
+                    button.style.transform = `translateY(${(index + 1) * 50}px)`;
                     button.style.opacity = '1';
                 }, 10);
             });
