@@ -24,20 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
         menuOpen = !menuOpen;
     });
 
+
+    let left = document.querySelector(".left")
+    let player = document.querySelector(".player")
+    let right = document.querySelector(".track_list")
     for (let i = 0; i < otherButtons.length; i++) {
         otherButtons[i].addEventListener('click', () => {
-            let left = document.querySelector(".left")
-            let player = document.querySelector(".player")
-            let right = document.querySelector(".track_list")
             if(i == 0){
                 left.style.order = "0"
                 player.style.order = "0"
                 right.style.order = "2"
             } else if(i == 1){
-                player.style.order = "0"
-                left.style.order = "1"
-                right.style.order = "2"
-            } else if(i == 2){
                 right.style.order = "0"
                 player.style.order = "1"
                 left.style.order = "2"

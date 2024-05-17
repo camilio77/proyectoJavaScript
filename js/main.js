@@ -39,7 +39,7 @@ const albumTracks = async (uri) =>{
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '8e046be440msh74b46ecc5a31f61p18d76djsn027ee4aaf416',
+            'X-RapidAPI-Key': '340d44197bmshc4390e4cf318650p1f0228jsn8fbaebff229a',
             'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
         }
     };
@@ -70,6 +70,18 @@ const albumTracks = async (uri) =>{
                     console.log(uri);
                     let frame = document.querySelector("my-frame");
                     frame.setAttribute("uri", uri);
+                    let caratula = document.querySelector(".caratula");
+                    let img = caratula.querySelector("img");
+                    let left = document.querySelector(".left")
+                    let player = document.querySelector(".player")
+                    let right = document.querySelector(".track_list")
+                    img.setAttribute("src", result.albums[0].images[0].url)
+                    caratula.style.display = "block";
+                    caratula.addEventListener('click', () => {
+                        player.style.order = "0"
+                        left.style.order = "1"
+                        right.style.order = "2"
+                    })
                 });
             });
         }
@@ -116,7 +128,7 @@ class albumsBusqueda extends HTMLElement {
             const options = {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Key': '8e046be440msh74b46ecc5a31f61p18d76djsn027ee4aaf416',
+                    'X-RapidAPI-Key': '340d44197bmshc4390e4cf318650p1f0228jsn8fbaebff229a',
                     'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
                 }
             };
@@ -150,6 +162,19 @@ class albumsBusqueda extends HTMLElement {
                         let uri = album.getAttribute("uri");
                         console.log(uri);
                         albumTracks(uri)
+                        let caratula = document.querySelector(".caratula");
+                        let img = caratula.querySelector("img");
+                        let left = document.querySelector(".left")
+                        let player = document.querySelector(".player")
+                        let right = document.querySelector(".track_list")
+                        let img2 = album.querySelector("img");
+                        img.setAttribute("src", img2.getAttribute("src"))
+                        caratula.style.display = "block";
+                        caratula.addEventListener('click', () => {
+                            player.style.order = "0"
+                            left.style.order = "1"
+                            right.style.order = "2"
+                        })
                     });
                 });
             } catch (error) {
@@ -193,7 +218,7 @@ class mayLike extends HTMLElement {
             const options = {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Key': '8e046be440msh74b46ecc5a31f61p18d76djsn027ee4aaf416',
+                    'X-RapidAPI-Key': '340d44197bmshc4390e4cf318650p1f0228jsn8fbaebff229a',
                     'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
                 }
             };
@@ -232,6 +257,19 @@ class mayLike extends HTMLElement {
                         console.log(uri);
                         let frame = document.querySelector("my-frame");
                         frame.setAttribute("uri", uri);
+                        let caratula = document.querySelector(".caratula");
+                        let img = caratula.querySelector("img");
+                        let left = document.querySelector(".left")
+                        let player = document.querySelector(".player")
+                        let right = document.querySelector(".track_list")
+                        let img2 = (track.querySelector(".img")).querySelector("img");
+                        img.setAttribute("src", img2.getAttribute("src"))
+                        caratula.style.display = "block";
+                        caratula.addEventListener('click', () => {
+                            player.style.order = "0"
+                            left.style.order = "1"
+                            right.style.order = "2"
+                        })
                     });
                 });
             } catch (error) {
