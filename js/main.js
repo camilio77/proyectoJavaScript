@@ -5,7 +5,7 @@ class myFrame extends HTMLElement {
         super();
         this.attachShadow({ mode: "open" });
     }
-    
+
     connectedCallback() {
         // Este método se llama cuando el elemento se conecta al DOM
         // Aquí puedes inicializar elementos, establecer eventos, etc.
@@ -24,7 +24,7 @@ class myFrame extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <iframe class="spotify-iframe" width="100%" height="100%" src="https://open.spotify.com/embed/${this.type}/${this.id}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         `;
-        if (type == "track"){
+        if (type == "track") {
             this.shadowRoot.innerHTML = `
             <iframe class="spotify-iframe" width="100%" height="100%" src="https://open.spotify.com/embed/${this.type}/${this.id}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         `;
@@ -33,7 +33,7 @@ class myFrame extends HTMLElement {
 };
 customElements.define("my-frame", myFrame);
 
-const albumTracks = async (uri) =>{
+const albumTracks = async (uri) => {
     let id = uri.split(":")[2]
     const url = `https://spotify23.p.rapidapi.com/albums/?ids=${id}`;
     const options = {
@@ -43,7 +43,7 @@ const albumTracks = async (uri) =>{
             'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
         }
     };
-    
+
     try {
         const response = await fetch(url, options);
         const result = await response.json();
@@ -89,7 +89,8 @@ const albumTracks = async (uri) =>{
         let frame = document.querySelector("my-frame");
         frame.setAttribute("uri", uri);
     } catch (error) {
-        console.error(error);
+        console.error("Error al obtener los álbumes:", error);
+        this.innerHTML = "<p>Error al cargar los álbumes.</p>";
     }
 
     let busqueda2 = document.querySelector(".busqueda2")
@@ -120,8 +121,8 @@ class albumsBusqueda extends HTMLElement {
         super();
     }
     async connectedCallback() {
-        let items = ["a", "b", "c","d", "e", "f", "g", "h", "i", "j", "k","l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y","z","1","2","3","4","5","6","7","8","9","10"]
-        let uri = items[Math.floor(Math.random()*items.length)];
+        let items = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+        let uri = items[Math.floor(Math.random() * items.length)];
         uri = uri.replace(" ", "%20");
         const listaAlbums = async (uri) => {
             const url = `https://spotify23.p.rapidapi.com/search/?q=${uri}&type=albums&offset=0&limit=10&numberOfTopResults=5`;
@@ -132,7 +133,7 @@ class albumsBusqueda extends HTMLElement {
                     'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
                 }
             };
-            
+
             try {
                 const response = await fetch(url, options);
                 const result = await response.json();
@@ -202,7 +203,7 @@ class albumsBusqueda extends HTMLElement {
             }
         });
     }
-}   
+}
 customElements.define('albums-list', albumsBusqueda);
 
 class mayLike extends HTMLElement {
@@ -210,8 +211,8 @@ class mayLike extends HTMLElement {
         super();
     }
     async connectedCallback() {
-        let items = ["a", "b", "c","d", "e", "f", "g", "h", "i", "j", "k","l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y","z","1","2","3","4","5","6","7","8","9","10"]
-        let uri = items[Math.floor(Math.random()*items.length)];
+        let items = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+        let uri = items[Math.floor(Math.random() * items.length)];
         uri = uri.replace(" ", "%20");
         const listaTrack = async (uri) => {
             const url = `https://spotify23.p.rapidapi.com/search/?q=${uri}&type=tracks&offset=0&limit=10&numberOfTopResults=5`;
@@ -273,7 +274,8 @@ class mayLike extends HTMLElement {
                     });
                 });
             } catch (error) {
-                console.error(error);
+                console.error("Error al obtener los álbumes:", error);
+                this.innerHTML = "<p>Error al cargar los álbumes.</p>";
             }
         }
         listaTrack(uri)
@@ -281,3 +283,87 @@ class mayLike extends HTMLElement {
 }
 customElements.define('track-list', mayLike);
 
+const buscador = async () => {
+
+    let items = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    let uri = items[Math.floor(Math.random() * items.length)];
+    uri = uri.replace(" ", "%20");
+    
+    const TrackSearch = async (uri) =>{
+        const url = `https://spotify23.p.rapidapi.com/search/?q=${uri}&type=tracks&offset=0&limit=10&numberOfTopResults=5`;
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '340d44197bmshc4390e4cf318650p1f0228jsn8fbaebff229a',
+                'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
+            }
+        };
+    
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            let track_container = document.querySelector(".track_container");
+            for (let i = 0; i < result.length; i++) {
+                maquetacion += `
+                <div uri="${result.tracks.items[i].data.uri}" class="track2">
+                    <i class='bx bx-align-middle'></i>
+                    <div class="img">
+                        <img src="${result.tracks.items[i].data.albumOfTrack.coverArt.sources[0].url}">
+                    </div>
+                    <div class="track_text">
+                        <h3>${result.tracks.items[i].data.name}</h3>
+                        <p>${result.tracks.items[i].data.artists.items[0].profile.name}</p>
+                    </div>
+                </div>
+                `;
+                track_container.innerHTML = maquetacion;
+                track_container.querySelectorAll(".track2").forEach(track => {
+                    track.addEventListener("click", () => {
+                        let uri = track.getAttribute("uri");
+                        console.log(uri);
+                        let frame = document.querySelector("my-frame");
+                        frame.setAttribute("uri", uri);
+                        let caratula = document.querySelector(".caratula");
+                        let img = caratula.querySelector("img");
+                        let left = document.querySelector(".left")
+                        let player = document.querySelector(".player")
+                        let right = document.querySelector(".track_list")
+                        img.setAttribute("src", result.albums[0].images[0].url)
+                        caratula.style.display = "block";
+                        caratula.addEventListener('click', () => {
+                            player.style.order = "0"
+                            left.style.order = "1"
+                            right.style.order = "2"
+                        })
+                    });
+                });
+            }
+        } catch (error) {
+            console.error("Error al obtener los álbumes:", error);
+            this.innerHTML = "<p>Error al cargar los álbumes.</p>";
+        }
+    }
+    
+    TrackSearch(uri);
+    
+    const boton_input = document.querySelector('#b-input');
+    const input = document.querySelector('#input');
+    boton_input.addEventListener('click', () => {
+        const searchTerm = input.value.trim();
+        if (searchTerm !== '') {
+            TrackSearch(searchTerm);
+        }
+    });
+    
+    input.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            const searchTerm = input.value.trim();
+            if (searchTerm !== '') {
+                TrackSearch(searchTerm);
+            }
+        }
+    });
+}
+
+buscador();
