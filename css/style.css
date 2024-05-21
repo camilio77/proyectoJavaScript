@@ -220,17 +220,51 @@ albums-list::-webkit-scrollbar-track {
 .track_text{
     width: 80%;
     height: 80%;
-    padding: 10px;
+    padding-left: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+.track_text h3 {
+    width: 100%;
+    height: 4vh;
+    overflow-x: auto;
+    text-wrap: nowrap;
+    box-sizing: border-box;
 }
 .track_text p {
     color: #7b7b7b;
 }
 
 /* scroll */
+
+.track_text h3::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.track_text h3::-webkit-scrollbar:vertical {
+    width:4px;
+}
+
+.track_text h3::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
+    display: none;
+} 
+
+.track_text h3::-webkit-scrollbar:horizontal {
+    height: 4px;
+}
+
+.track_text h3::-webkit-scrollbar-thumb {
+    background-color: #292929;
+    border-radius: 20px;
+    border: 2px solid #242424;
+}
+
+.track_text h3::-webkit-scrollbar-track {
+    border-radius: 10px;  
+}
+
 
 .may_like track-list::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -348,7 +382,7 @@ my-frame{
 
 .track2{
     width: 100%;
-    height: 12%;
+    height: 12vh;
     display: flex;
     flex-direction: row;
     box-sizing: border-box;

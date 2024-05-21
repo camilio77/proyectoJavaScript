@@ -39,7 +39,7 @@ const albumTracks = async (uri) => {
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '340d44197bmshc4390e4cf318650p1f0228jsn8fbaebff229a',
+            'X-RapidAPI-Key': '8228834a10mshbe60c7338b81e60p14bcecjsn23f60ee4ca16',
             'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
         }
     };
@@ -129,7 +129,7 @@ class albumsBusqueda extends HTMLElement {
             const options = {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Key': '340d44197bmshc4390e4cf318650p1f0228jsn8fbaebff229a',
+                    'X-RapidAPI-Key': '8228834a10mshbe60c7338b81e60p14bcecjsn23f60ee4ca16',
                     'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
                 }
             };
@@ -219,7 +219,7 @@ class mayLike extends HTMLElement {
             const options = {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Key': '340d44197bmshc4390e4cf318650p1f0228jsn8fbaebff229a',
+                    'X-RapidAPI-Key': '8228834a10mshbe60c7338b81e60p14bcecjsn23f60ee4ca16',
                     'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
                 }
             };
@@ -294,17 +294,19 @@ const buscador = async () => {
         const options = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': '340d44197bmshc4390e4cf318650p1f0228jsn8fbaebff229a',
+                'X-RapidAPI-Key': '8228834a10mshbe60c7338b81e60p14bcecjsn23f60ee4ca16',
                 'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
             }
         };
     
-        try {
+        try {   
             const response = await fetch(url, options);
             const result = await response.json();
             console.log(result);
             let track_container = document.querySelector(".track_container");
-            for (let i = 0; i < result.length; i++) {
+            let tra = result.tracks.items
+            let maquetacion = "";
+            for (let i = 0; i < tra.length; i++) {
                 maquetacion += `
                 <div uri="${result.tracks.items[i].data.uri}" class="track2">
                     <i class='bx bx-align-middle'></i>
